@@ -3,6 +3,25 @@
 const overlay = document.querySelector('.overlay');
 overlay.classList.remove('active');
 
+const overlayActiv = document.querySelector('.panel__add-goods')
+overlayActiv.addEventListener('click', () => {
+  overlay.classList.add('active');
+});
+
+const overlayModal = document.querySelector('.overlay__modal');
+overlayModal.addEventListener('click', event => {
+  event.stopPropagation();
+});
+
+const btnCloseOverlay = document.querySelector('.modal__close');
+btnCloseOverlay.addEventListener('click', () => {
+  overlay.classList.remove('active');
+});
+
+overlay.addEventListener('click', () => {
+  overlay.classList.remove('active');
+});
+
 const goods = [
   {
     "id": 1,
