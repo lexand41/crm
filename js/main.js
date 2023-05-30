@@ -1,26 +1,5 @@
 'use strict';
 
-const overlay = document.querySelector('.overlay');
-overlay.classList.remove('active');
-
-const overlayActiv = document.querySelector('.panel__add-goods')
-overlayActiv.addEventListener('click', () => {
-  overlay.classList.add('active');
-});
-
-const overlayModal = document.querySelector('.overlay__modal');
-overlayModal.addEventListener('click', event => {
-  event.stopPropagation();
-});
-
-const btnCloseOverlay = document.querySelector('.modal__close');
-btnCloseOverlay.addEventListener('click', () => {
-  overlay.classList.remove('active');
-});
-
-overlay.addEventListener('click', () => {
-  overlay.classList.remove('active');
-});
 
 const goods = [
   {
@@ -83,6 +62,8 @@ const goods = [
 
 const createRow = (arrow) => {
   const row = document.createElement('tr');
+  row.setAttribute('data-id', arrow.id);
+  row.classList.add('product');
 
   const row_num = document.createElement('td');
   row_num.classList.add('table__cell');
@@ -95,7 +76,7 @@ const createRow = (arrow) => {
 
   const row_id = document.createElement('td');
   row_id.innerHTML = arrow.title;
-  row_id.classList.add('table__cell', 'table__cell_left', 'table__cell_name')
+  row_id.classList.add('table__cell', 'table__cell_left', 'table__cell_name');
   row_id.setAttribute('data-id', arrow.id);
   row_id.insertAdjacentElement('afterbegin', span_id);
 
@@ -137,12 +118,10 @@ const createRow = (arrow) => {
   row.append(row_num, row_id, row_category,
     row_units, row_count, row_price, row_total, row_button);
 
-  table.append(row);
-
-  console.log(row);
+  tableBody.append(row);
 };
 
-const table = document.querySelector('.goods__table');
+const tableBody = document.querySelector('.table__body')
 
 let number = 2;
 
@@ -154,3 +133,30 @@ const renderGoods = () => {
 };
 
 renderGoods();
+
+const overlay = document.querySelector('.overlay');
+overlay.classList.remove('active');
+
+const overlayActiv = document.querySelector('.panel__add-goods')
+overlayActiv.addEventListener('click', () => {
+  overlay.classList.add('active');
+});
+
+overlay.addEventListener('click', (e) => {
+  const target = e.target;
+  if (target === overlay || target.closest('.modal__close')) {
+    overlay.classList.remove('active');
+  }
+});
+
+tableBody.addEventListener('click', e => {
+  if (e.target.closest('.table__btn_del')) {
+    const removeProduct = e.target.closest('.product');
+    const productId = removeProduct.dataset.id;
+    goods.forEach((el, i) => {
+      if (el.id == productId) goods.splice(i, 1);
+    });
+    removeProduct.remove();
+    console.log('goods: ',goods);
+  }
+});
