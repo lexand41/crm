@@ -99,6 +99,8 @@ const createRow = (arrow) => {
   const row_total = document.createElement('td');
   row_total.classList.add('table__cell');
   row_total.innerHTML = `$${arrow.price * arrow.count}`;
+  
+  row_total.classList.add('table__cell_total');
 
   const button_pic = document.createElement('button');
   button_pic.classList.add('table__btn', 'table__btn_pic');
@@ -121,7 +123,12 @@ const createRow = (arrow) => {
   tableBody.append(row);
 };
 
-const tableBody = document.querySelector('.table__body')
+const addProductGoods = (product) => {
+  goods.push(product);
+};
+
+
+const tableBody = document.querySelector('.table__body');
 
 let number = 2;
 
@@ -134,13 +141,21 @@ const renderGoods = () => {
 
 renderGoods();
 
+const createSumTotal = () => {
+  const priceTotals = document.querySelectorAll('.table__cell_total');
+  const cmsTotalPrice = document.querySelector('.cms__total-price')
+  let sumPriceTotals = 0;
+  for (let priceTotal of priceTotals) {
+    sumPriceTotals += +(priceTotal.textContent).slice(1);
+  };
+  cmsTotalPrice.innerHTML = `$${sumPriceTotals}`;
+};
+
 const overlay = document.querySelector('.overlay');
 overlay.classList.remove('active');
 
-const overlayActiv = document.querySelector('.panel__add-goods')
-overlayActiv.addEventListener('click', () => {
-  overlay.classList.add('active');
-});
+const overlayActiv = document.querySelector('.panel__add-goods');
+const vendorCodeId = document.querySelector('.vendor-code__id');
 
 overlay.addEventListener('click', (e) => {
   const target = e.target;
@@ -149,14 +164,81 @@ overlay.addEventListener('click', (e) => {
   }
 });
 
-tableBody.addEventListener('click', e => {
+tableBody.addEventListener('click', (e) => {
   if (e.target.closest('.table__btn_del')) {
     const removeProduct = e.target.closest('.product');
     const productId = removeProduct.dataset.id;
+
     goods.forEach((el, i) => {
       if (el.id == productId) goods.splice(i, 1);
     });
     removeProduct.remove();
-    console.log('goods: ',goods);
+    // console.log('goods: ',goods);
+    createSumTotal();
   }
 });
+
+const form = document.querySelector('.modal__form');
+const modalTotalPrice = document.querySelector('.modal__total-price');
+const modalId = document.querySelector('.modal__id');
+
+const createSumModalTotal = (newProduct) => {
+  let sumModalTotal = newProduct.count == 0 ?
+      newProduct.price * 1 : newProduct.count * newProduct.price;
+
+  modalTotalPrice.innerHTML = `$${sumModalTotal}`;
+};
+
+const formControl = (form) => {
+  overlayActiv.addEventListener('click', () => {
+    overlay.classList.add('active');
+    
+    let randomNum = (Math.floor(Math.random() * 1e14));
+    vendorCodeId.innerHTML = randomNum;
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    number += 1;
+
+    const formProduct = new FormData(e.target);
+    const newProduct = Object.fromEntries(formProduct);
+    
+    createRow(newProduct);
+    addProductGoods(newProduct);
+    createSumModalTotal(newProduct);
+    createSumTotal();
+
+    modalTotalPrice.innerHTML = '';
+    form.reset();
+    overlay.classList.remove('active');
+  });
+};
+
+formControl(form);
+
+form.addEventListener('change', () => {
+  const formProduct = new FormData(form);
+  const newProduct = Object.fromEntries(formProduct);
+
+  createSumModalTotal(newProduct);
+});
+
+const blockInput = () => {
+  const chbox = document.querySelector('#discount');
+  const input = document.querySelector('.modal__input_discount')
+	input.disabled = chbox.checked ? 0 : 1;
+  if (!chbox.checked) {
+		input.value = '';
+	}
+};
+
+createSumTotal();
+
+
+
+
+
+
+
+
