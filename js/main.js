@@ -195,6 +195,7 @@ const formControl = (form) => {
     
     let randomNum = (Math.floor(Math.random() * 1e14));
     vendorCodeId.innerHTML = randomNum;
+    sessionStorage.setItem('randomNum', randomNum);
   });
 
   form.addEventListener('submit', (e) => {
@@ -203,6 +204,9 @@ const formControl = (form) => {
 
     const formProduct = new FormData(e.target);
     const newProduct = Object.fromEntries(formProduct);
+    const randomNum = sessionStorage.getItem('randomNum');
+    newProduct.id = randomNum;
+    console.log(randomNum);
     
     createRow(newProduct);
     addProductGoods(newProduct);
