@@ -206,7 +206,6 @@ const formControl = (form) => {
     const newProduct = Object.fromEntries(formProduct);
     const randomNum = sessionStorage.getItem('randomNum');
     newProduct.id = randomNum;
-    console.log(randomNum);
     
     createRow(newProduct);
     addProductGoods(newProduct);
