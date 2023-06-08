@@ -5,14 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CMS</title>
   <link rel="preload" href="fonts/inter-v7-latin_cyrillic-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-v7-latin_cyrillic-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-v7-latin_cyrillic-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-v7-latin_cyrillic-700.woff2" as="font" type="font/woff2" crossorigin>
-
   <link rel="stylesheet" href="css/index.css">
-  <script src="js/main.js" defer ></script>
-  <title>CMS</title>
+
+  <script type="module" src="js/main.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      crmInit();
+    })
+  </script>
+
+
 </head>
 
 <body>
@@ -52,7 +60,7 @@
             </thead>
             <tbody class="table__body">
               <tr class="product">
-                <td class="table__cell">1</td>
+                <td class="table__cell number">1</td>
                 <td class="table__cell table__cell_left table__cell_name" data-id="24601654816512">
                   <span class="table__cell-id">id: 24601654816512</span>
                   Навигационная система Soundmax</td>
@@ -60,7 +68,7 @@
                 <td class="table__cell">шт</td>
                 <td class="table__cell">5</td>
                 <td class="table__cell">$100</td>
-                <td class="table__cell_total">$500</td>
+                <td class="table__cell table__cell_total">$500</td>
                 <td class="table__cell table__cell_btn-wrapper">
                   <button class="table__btn table__btn_pic"></button>
                   <button class="table__btn table__btn_edit"></button>
@@ -68,14 +76,14 @@
                 </td>
               </tr>
               <tr class="product">
-                <td class="table__cell ">2</td>
+                <td class="table__cell number">2</td>
                 <td class="table__cell table__cell_left table__cell_name" data-id="24601654816512">
                   <span class="table__cell-id">id: 24601654816512</span>Телевизор DEXP</td>
                 <td class="table__cell table__cell_left">Техника для дома</td>
                 <td class="table__cell">шт</td>
                 <td class="table__cell">15</td>
                 <td class="table__cell">$1000</td>
-                <td class="table__cell_total">$15000</td>
+                <td class="table__cell table__cell_total">$15000</td>
                 <td class="table__cell table__cell_btn-wrapper">
                   <button class="table__btn table__btn_pic"></button>
                   <button class="table__btn table__btn_edit"></button>
@@ -130,7 +138,7 @@
 
           <label class="modal__label modal__label_description" for="description">
             <span class="modal__text">Описание</span>
-            <textarea class="modal__input modal__input_textarea" name="description" id="description" required ></textarea>
+            <textarea class="modal__input modal__input_textarea" name="description" id="description"  required></textarea>
           </label>
 
           <label class="modal__label modal__label_units" for="units">
@@ -142,7 +150,7 @@
             <label class="modal__text" for="discount">Дисконт</label>
             <div class="modal__checkbox-wrapper">
               <input class="modal__checkbox" type="checkbox" name="discount" id="discount" onchange="blockInput()">
-              <input class="modal__input modal__input_discount" type="text" name="discount_count" disabled required >
+              <input class="modal__input modal__input_discount" for="discount" type="text" name="discount_count" disabled  required>
             </div>
           </div>
 
