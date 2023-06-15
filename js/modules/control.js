@@ -33,9 +33,11 @@ export const closeModal = () => {
     if (e.target.closest('.table__btn_del')) {
       const removeProduct = e.target.closest('.product');
       const productId = removeProduct.dataset.id;
+      console.log(goods);
       goods.forEach((el, i) => {
         if (el.id == productId) goods.splice(i, 1);
       });
+      console.log(goods);
       removeProduct.remove();
 
       setNumbers();
