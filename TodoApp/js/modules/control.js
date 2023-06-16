@@ -119,41 +119,41 @@ const tableControl = (list, form) => {
     }
 
     if (target.closest('.btn-secondary')) {
-      tasks.forEach((el) => {
-        if (el.id === rowTargetId) {
-          el.edit = 'edit';
-          el.jobStatus = 'В процессе';
-          startEdit(jobTarget);
-          jobStatusTarget.textContent = 'В процессе';
-          jobTarget.style.textDecoration = 'none';
-          jobTarget.classList.add('border-dark', 'border-2');
-          rowTarget.className = 'table-light row-table';
-          btnEditTarget.classList.add('text-warning', 'bg-dark');
-          btnEditSave.removeAttribute('disabled');
-        }
-      });
-      setLocalStorage(key, tasks);
-    }
-
-    if (target.closest('.btn_edit_save')) {
-      stopEdit(jobTarget);
-      tasks.forEach((el) => {
-        if (el.id === rowTargetId) {
-          el.edit = 'Unedit';
-          el.task = jobTarget.textContent;
-          if (el.selectTask === 'warning') {
-            rowTarget.className = 'table-warning';
+      if (btnEditSave) {
+        tasks.forEach((el) => {
+          if (el.id === rowTargetId) {
+            el.edit = 'edit';
+            el.jobStatus = 'В процессе';
+            startEdit(jobTarget);
+            jobStatusTarget.textContent = 'В процессе';
+            jobTarget.style.textDecoration = 'none';
+            jobTarget.classList.add('border-dark', 'border-2');
+            rowTarget.className = 'table-light row-table';
+            btnEditTarget.classList.add('text-warning', 'bg-dark');
+            btnEditSave.classList.remove('btn_edit_save');
           }
-          if (el.selectTask === 'danger') {
-            rowTarget.className = 'table-danger';
+        });
+        setLocalStorage(key, tasks);
+      } else {
+        stopEdit(jobTarget);
+        tasks.forEach((el) => {
+          if (el.id === rowTargetId) {
+            el.edit = 'Unedit';
+            el.task = jobTarget.textContent;
+            if (el.selectTask === 'warning') {
+              rowTarget.className = 'table-warning';
+            }
+            if (el.selectTask === 'danger') {
+              rowTarget.className = 'table-danger';
+            }
+            rowTarget.classList.add('row-table');
+            jobTarget.classList.remove('border-dark', 'border-2');
+            btnEditTarget.classList.remove('text-warning', 'bg-dark');
+            btnEditTarget.classList.add('btn_edit_save');
           }
-          rowTarget.classList.add('row-table');
-          jobTarget.classList.remove('border-dark', 'border-2');
-          btnEditTarget.classList.remove('text-warning', 'bg-dark');
-          btnEditSave.disabled = 'true';
-        }
-      });
-      setLocalStorage(key, tasks);
+        });
+        setLocalStorage(key, tasks);
+      }
     }
   });
 };

@@ -95,16 +95,11 @@ const createRow = ({task, jobStatus, id, edit, selectTask}) => {
   btnComplete.textContent = 'Завершить';
 
   const btnEdit = document.createElement('button');
-  btnEdit.classList.add('btn', 'me-3', 'btn-secondary', 'btn_edit');
+  btnEdit.classList.add('btn', 'btn-secondary', 'btn_edit', 'btn_edit_save');
   btnEdit.textContent = 'Редактировать';
 
-  const btnEditSave = document.createElement('button');
-  btnEditSave.classList.add('btn', 'btn-primary', 'btn_edit_save');
-  btnEditSave.setAttribute('disabled', 'true');
-  btnEditSave.textContent = 'Сохранить';
-
   const rowButtons = document.createElement('td');
-  rowButtons.append(btnDelete, btnComplete, btnEdit, btnEditSave);
+  rowButtons.append(btnDelete, btnComplete, btnEdit);
 
   if (jobStatus === 'Выполнена') {
     tr.className = 'table-success';
