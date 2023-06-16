@@ -71,6 +71,8 @@ const tableControl = (list, form) => {
     const jobTarget = rowTarget.querySelector('.job');
     const btnEditTarget = rowTarget.querySelector('.btn_edit');
     const btnEditSave = rowTarget.querySelector('.btn_edit_save');
+    const btnComp = rowTarget.querySelector('.btn-success');
+    const btnComplete = rowTarget.querySelector('.btn_complete');
 
     if (target.closest('.btn-danger')) {
       if (confirm('Вы точно хотите удалить задачу?') === true) {
@@ -84,15 +86,36 @@ const tableControl = (list, form) => {
     }
 
     if (target.closest('.btn-success')) {
-      tasks.forEach((el) => {
-        if (el.id === rowTargetId) {
-          el.jobStatus = 'Выполнена';
-          jobStatusTarget.textContent = 'Выполнена';
-          jobTarget.style.textDecoration = 'line-through';
-          rowTarget.className = 'table-success row-table';
-        }
-      });
-      setLocalStorage(key, tasks);
+      if (btnComplete) {
+        tasks.forEach((el) => {
+          if (el.id === rowTargetId) {
+            el.jobStatus = 'Выполнена';
+            jobStatusTarget.textContent = 'Выполнена';
+            jobTarget.style.textDecoration = 'line-through';
+            rowTarget.className = 'table-success row-table';
+            btnComplete.classList.remove('btn_complete');
+          }
+        });
+        setLocalStorage(key, tasks);
+      } else {
+        tasks.forEach((el) => {
+          if (el.id === rowTargetId) {
+            el.jobStatus = 'В процессе';
+            jobStatusTarget.textContent = 'В процессе';
+            jobTarget.style.textDecoration = 'none';
+            rowTarget.className = 'table-light';
+            if (el.selectTask === 'warning') {
+              rowTarget.className = 'table-warning';
+            }
+            if (el.selectTask === 'danger') {
+              rowTarget.className = 'table-danger';
+            }
+            rowTarget.classList.add('row-table');
+            btnComp.classList.add('btn_complete');
+          }
+        });
+        setLocalStorage(key, tasks);
+      }
     }
 
     if (target.closest('.btn-secondary')) {

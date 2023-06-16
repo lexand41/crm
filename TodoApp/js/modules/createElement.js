@@ -91,7 +91,7 @@ const createRow = ({task, jobStatus, id, edit, selectTask}) => {
   btnDelete.textContent = 'Удалить';
 
   const btnComplete = document.createElement('button');
-  btnComplete.classList.add('btn', 'me-3', 'btn-success');
+  btnComplete.classList.add('btn', 'me-3', 'btn-success', 'btn_complete');
   btnComplete.textContent = 'Завершить';
 
   const btnEdit = document.createElement('button');
