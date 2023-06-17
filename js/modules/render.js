@@ -47,6 +47,7 @@ const createRow = (arrow, tableBody) => {
 
   const button_pic = document.createElement('button');
   button_pic.classList.add('table__btn', 'table__btn_pic');
+  button_pic.setAttribute('data-pic', arrow.pic);
 
   const button_edit = document.createElement('button');
   button_edit.classList.add('table__btn', 'table__btn_edit');

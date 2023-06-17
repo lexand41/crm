@@ -30,6 +30,13 @@ export const closeModal = () => {
   });
 
   tableBody.addEventListener('click', (e) => {
+    if (e.target.closest('.table__btn_pic')) {
+      const urlImage = e.target.closest('.table__btn_pic').dataset.pic;
+      const win = open('about:blank', '', `width = 800, height = 600,
+        top = ${(screen.height / 2) - (screen.height / 3.2)},
+        left = ${(screen.width / 2) - (screen.width / 5)}`);
+      win.document.body.innerHTML =`<img src="${urlImage}">`;
+    }
     if (e.target.closest('.table__btn_del')) {
       const removeProduct = e.target.closest('.product');
       const productId = removeProduct.dataset.id;
@@ -56,10 +63,12 @@ export const formControl = () => {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+
     const formProduct = new FormData(e.target);
     const newProduct = Object.fromEntries(formProduct);
     const randomNum = sessionStorage.getItem('randomNum');
     newProduct.id = randomNum;
+    newProduct.pic = "https://demos.transloadit.com/79/c3dc3985a64dce869f9a780bb33d25/desert.jpg";
 
     createRow(newProduct, tableBody);
     setNumbers();
