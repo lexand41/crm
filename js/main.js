@@ -2,6 +2,7 @@ import elemFromPage from './modules/elemFromPage.js';
 import render from './modules/render.js';
 import {closeModal, formControl} from './modules/control.js';
 import {createSumTotal} from './modules/calcAmount.js';
+import './modules/backend.js';
 
 const {
   chbox,

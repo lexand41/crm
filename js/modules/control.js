@@ -1,7 +1,8 @@
 import elemFromPage from './elemFromPage.js';
 import render from './render.js';
 import {createSumTotal, createSumModalTotal} from './calcAmount.js';
-import goods from './arrayWithData.js'
+import goods from './arrayWithData.js';
+import {createImagePreview} from './imagePreview.js';
 
 
 const {
@@ -19,6 +20,7 @@ const {
   addProductGoods,
 } = render;
 
+createImagePreview();
 
 export const closeModal = () => {
   overlay.classList.remove('active');
@@ -40,11 +42,9 @@ export const closeModal = () => {
     if (e.target.closest('.table__btn_del')) {
       const removeProduct = e.target.closest('.product');
       const productId = removeProduct.dataset.id;
-      console.log(goods);
       goods.forEach((el, i) => {
         if (el.id == productId) goods.splice(i, 1);
       });
-      console.log(goods);
       removeProduct.remove();
 
       setNumbers();
@@ -87,4 +87,16 @@ export const formControl = () => {
   });
 
 };
+
+const toBase64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.addEventListener('loadend', () => {
+    resolve(reader.result);
+  });
+  reader.addEventListener('error', err => {
+    reject(err);
+  });
+  reader.readAsDataURL(file);
+});
+
 

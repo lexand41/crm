@@ -7,7 +7,6 @@ const overlayActiv = document.querySelector('.panel__add-goods');
 const vendorCodeId = document.querySelector('.vendor-code__id');
 const modalTotalPrice = document.querySelector('.modal__total-price');
 
-
 export default {
   chbox,
   input,
